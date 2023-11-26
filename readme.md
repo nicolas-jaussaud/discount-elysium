@@ -6,7 +6,7 @@ Example implementation of the following modules:
 
 ## Demo
 
-See demo: https://github.com/nicolas-jaussaud/discount-elysium
+See demo: https://nicolas-jaussaud.github.io/discount-elysium/
 
 ## Ressources
 
