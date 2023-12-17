@@ -1,8 +1,8 @@
 import { 
   PlaneGeometry, 
-  MeshBasicMaterial,
+  MeshToonMaterial,
   TextureLoader,
-  Mesh 
+  Mesh
 } from 'three'
 
 const renderGrass = ({
@@ -11,11 +11,18 @@ const renderGrass = ({
   app
 }) => {
 
+  const material = app.world.materials.get(
+    `./assets/ressources/world/grass/grass.avif`,
+    url => {
+      const texture  = new TextureLoader().load(url)
+      return new MeshToonMaterial({ map: texture })
+    }
+  )
+
   const geometry = new PlaneGeometry(app.map.squareSize, app.map.squareSize)
-  const texture  = new TextureLoader().load(`./assets/ressources/world/grass/grass.avif`)
-  const material = new MeshBasicMaterial({ map: texture })
   const plane    = new Mesh(geometry, material)
 
+  plane.receiveShadow = true
   plane.position.set(
     coordinates.x[1] - app.map.squareSize / 2, 
     coordinates.y[1] - app.map.squareSize / 2,

@@ -2,7 +2,7 @@ import {
   PlaneGeometry, 
   Mesh,
   VideoTexture,
-  MeshBasicMaterial
+  MeshToonMaterial
 } from 'three'
 
 const renderWater = ({
@@ -16,13 +16,17 @@ const renderWater = ({
    */
   app.hooks.addAction('loadComplete', () => {
 
-    const material = createVideoMaterial(`./assets/ressources/world/water/water-${config.animation ?? 'regular'}.mp4`)
+    const material = app.world.materials.get(
+      `./assets/ressources/world/water/water-${config.animation ?? 'regular'}.mp4`,
+      key => createVideoMaterial(key)
+    )
     
     const geometry = new PlaneGeometry(app.map.squareSize, app.map.squareSize)
     const plane    = new Mesh(geometry, material)
 
     if( config.rotation ) plane.rotation.z = config.rotation
 
+    plane.receiveShadow = true
     plane.position.set(
       coordinates.x[1] - app.map.squareSize / 2, 
       coordinates.y[1] - app.map.squareSize / 2,
@@ -48,9 +52,8 @@ const createVideoMaterial = url => {
   video.play()
 
   const texture = new VideoTexture(video)
-  texture.needsUpdate = true
   
-  return new MeshBasicMaterial({ map : texture })
+  return new MeshToonMaterial({ map : texture })
 }
 
 export { renderWater }

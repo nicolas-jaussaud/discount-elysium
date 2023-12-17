@@ -8,7 +8,7 @@ const renderTree = ({
 }) => {
 
   renderGrass({coordinates, app, scene})
-  
+
   app.world.add(
     `./assets/ressources/world/tree/forest${config.type ?? 1}.fbx`,
     { walkable: false },
@@ -22,7 +22,9 @@ const renderTree = ({
       
       tree.scale.set( 0.2, 0.2, 0.2 )
       tree.rotation.x = Math.PI / 2
-    
+      tree.castShadow = true
+      tree.receiveShadow = true
+      
       scene.add(tree)
     }
   )

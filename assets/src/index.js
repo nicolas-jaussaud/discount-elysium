@@ -1,6 +1,7 @@
 import {
   DirectionalLight,
-  HemisphereLight
+  HemisphereLight,
+  CameraHelper
 } from 'three'
 
 import { registerSquares } from './squares'
@@ -28,11 +29,33 @@ const init = () => {
   initCharacters(app)
   initConversations(app, discussions)
 
-  const sideLight = new DirectionalLight('rgb(200, 230, 255)', 0.3)
-  const hemiLight = new HemisphereLight(0x9999FF, 0x88ffFF, 0.7)
+  const hemiLight = new HemisphereLight(0xFFFFFF, 0xFFFFFF, 0.7)
+  const sideLight = new DirectionalLight('rgb(255, 255, 255)', 0.1)
+
+  /**
+   * The directional light shadows works like an orthographic camera, and we need to 
+   * set up left/right/top/bottom/near/far in order to see the shadows correctly
+   * 
+   * @see https://threejs.org/docs/#api/en/lights/shadows/DirectionalLightShadow
+   * @see https://stackoverflow.com/a/73590527/10491705
+   * @see https://stackoverflow.com/a/44547936/10491705
+   */
+  sideLight.position.set(500, 500, 1000)
+  sideLight.castShadow = true
+  sideLight.shadow.camera.left = 2000
+  sideLight.shadow.camera.right = -2000
+  sideLight.shadow.camera.top = 2000
+  sideLight.shadow.camera.bottom = -2000
+  sideLight.shadow.camera.near = 0.1
+  sideLight.shadow.camera.far = 10000
   
-  sideLight.position.set(7000000, -10000000, 10000000)
-  sideLight.rotation.x = 0
+  if( app.environment === 'development' ) {
+    app.hooks.addAction('loadComplete', () => {    
+      app.map.current.scene.add( 
+        new CameraHelper( sideLight.shadow.camera ) 
+      )
+    })
+  }
 
   app.lights.push(hemiLight)
   app.lights.push(sideLight)
