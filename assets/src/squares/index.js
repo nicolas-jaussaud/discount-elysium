@@ -1,3 +1,4 @@
+import { renderCliff } from './cliff'
 import { renderGrass } from './grass'
 import { renderWater } from './water'
 import { renderTree } from './tree'
@@ -5,6 +6,11 @@ import { renderPath } from './path'
 import { renderExitPath } from './path-exit'
 
 const registerSquares = app =>  {
+
+  app.map.registerSquareType('cliff', {
+    render   : renderCliff,
+    walkable : false
+  })
 
   app.map.registerSquareType('grass', {
     render   : renderGrass,

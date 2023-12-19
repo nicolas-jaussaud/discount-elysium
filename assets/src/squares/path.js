@@ -1,3 +1,4 @@
+import { createWall } from './helpers/wall'
 import { 
   PlaneGeometry, 
   TextureLoader,
@@ -8,11 +9,12 @@ import {
 const renderPath = ({
   coordinates,
   app,
-  scene
+  scene,
+  config
 }) => {
 
   const material = app.world.materials.get(
-    `./assets/ressources/world/path/path.jpg`,
+    `./assets/ressources/world/path/path-${config.type ?? 'narow'}.jpg`,
     url => {
       const texture  = new TextureLoader().load(url)
       return new MeshToonMaterial({ map: texture })
@@ -30,6 +32,13 @@ const renderPath = ({
   )
     
   scene.add(plane)
+
+  if( ! config.wall ) return; 
+
+  config.wall.forEach(position => {
+    const wall = createWall(app, scene, coordinates, position)
+    wall.position.z = - ( app.map.squareSize / 2 ) + 50
+  })
 }
 
 export { renderPath }

@@ -28,8 +28,9 @@ const renderGrass = ({
     coordinates.y[1] - app.map.squareSize / 2,
     0
   )
-  
+
   scene.add(plane)
+  return plane
 }
 
 export { renderGrass }

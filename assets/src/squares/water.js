@@ -1,3 +1,4 @@
+import { createWall } from './helpers/wall'
 import { 
   PlaneGeometry, 
   Mesh,
@@ -30,10 +31,17 @@ const renderWater = ({
     plane.position.set(
       coordinates.x[1] - app.map.squareSize / 2, 
       coordinates.y[1] - app.map.squareSize / 2,
-      0
+      -20
     )
 
     scene.add(plane)
+
+    if( ! config.wall ) return; 
+
+    config.wall.forEach(position => {
+      const wall = createWall(app, scene, coordinates, position)
+      wall.position.z = - ( app.map.squareSize / 2 ) - 1
+    })
   })  
 }
 

@@ -7,7 +7,7 @@ const renderTree = ({
   scene
 }) => {
 
-  renderGrass({coordinates, app, scene})
+  renderGrass({ coordinates, app, scene, config })
 
   app.world.add(
     `./assets/ressources/world/tree/forest${config.type ?? 1}.fbx`,
@@ -17,7 +17,7 @@ const renderTree = ({
       tree.position.set(
         coordinates.x[1] - app.map.squareSize / 2, 
         coordinates.y[1] - app.map.squareSize / 2,
-        -10
+        config.height ?? -10
       )
       
       tree.scale.set( 0.2, 0.2, 0.2 )

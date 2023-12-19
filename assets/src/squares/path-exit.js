@@ -16,7 +16,7 @@ const renderExitPath = ({
 }) => {
 
   const material = app.world.materials.get(
-    `./assets/ressources/world/path/path-exit.jpg`,
+    `./assets/ressources/world/path/path-narow.jpg`,
     url => {
       const texture  = new TextureLoader().load(url)
       return new MeshToonMaterial({ map: texture })
@@ -34,7 +34,7 @@ const renderExitPath = ({
   )
 
   const arrow = config.arrow ?? 'bottom'
-  if( arrow === 'top' ) plane.rotation.z = Math.PI
+  // if( arrow === 'top' ) plane.rotation.z = Math.PI
 
   const maybeLoadMap = ({
     character
