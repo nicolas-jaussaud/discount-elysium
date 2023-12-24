@@ -14,10 +14,6 @@ const renderCliff = ({
     createCliff(app, scene, coordinates, cliff)
     maxHeight = maxHeight < cliff.height ? cliff.height : maxHeight
   })
-
-  const grass = renderGrass({ scene, coordinates, app })
-
-  grass.position.z = app.map.squareSize * maxHeight
 }
 
 export { renderCliff }

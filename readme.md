@@ -18,4 +18,3 @@ Ressources used in the demo:
   - Grass by [babysofja](https://www.freepik.com/author/babysofja) from [freepik](https://www.freepik.com/free-vector/seamless-textured-grass-natural-grass-pattern_11930799.htm)
   - Paving stone on the grass by [babysofja] from [freepik](https://www.freepik.com/free-vector/texture-paving-stone-grass_11571878.htm)
   - Stone path by [babysofja] from [freepik](https://www.freepik.com/free-vector/set-seamless-texture-stone-step-by-step-drawing_11571874.htm)
-  - Water texture created with [animation-maker](https://brush.ninja/create/animation-maker/) from [brush.ninja](https://brush.ninja)

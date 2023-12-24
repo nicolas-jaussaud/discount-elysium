@@ -60,6 +60,15 @@ const init = () => {
   app.lights.push(hemiLight)
   app.lights.push(sideLight)
 
+  /**
+   * For better performances, we only render the shadows once one the initial load
+   * instead of on every frame
+   * 
+   * The drawback is that we won't have shadows for characters
+   */
+  app.hooks.addAction('mapLoaded', () => app.renderer.shadowMap.autoUpdate = true)
+  app.hooks.addAction('loadComplete', () => app.renderer.shadowMap.autoUpdate = false)
+
   window.app = app
 } 
 

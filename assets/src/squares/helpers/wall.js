@@ -7,27 +7,25 @@ import {
 
 const createWall = (app, scene, coordinates, position) => {
   
-  const imageMaterial = app.world.materials.get(
+  const wall = app.world.materials.get(
     `./assets/ressources/world/cliff/cliff.jpg`,
     url => {
-      const texture  = new TextureLoader().load(url)
-      return new MeshToonMaterial({ map: texture })
+
+      const texture       = new TextureLoader().load(url)
+      const imageMaterial = new MeshToonMaterial({ map: texture })
+      const colorMaterial = new MeshToonMaterial({ color: 0x464237 })
+      const geometry      = new BoxGeometry(app.map.squareSize, 40, app.map.squareSize)  
+
+      return new Mesh(geometry, [ 
+        colorMaterial, 
+        colorMaterial,
+        colorMaterial,
+        imageMaterial,
+        colorMaterial,
+        colorMaterial,
+      ])
     }
-  )
-
-  const colorMaterial = app.world.materials.get(
-    `0x464237`, () => new MeshToonMaterial({ color: 0x464237 })
-  )
-
-  const geometry = new BoxGeometry(app.map.squareSize, 40, app.map.squareSize)  
-  const wall     = new Mesh(geometry, [ 
-    colorMaterial, 
-    colorMaterial,
-    colorMaterial,
-    imageMaterial,
-    colorMaterial,
-    colorMaterial,
-  ])
+  ).clone()
 
   wall.receiveShadow = true
   wall.castShadow = true
