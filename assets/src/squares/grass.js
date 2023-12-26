@@ -11,7 +11,7 @@ const renderGrass = ({
   app
 }) => {
 
-  const plane = app.world.materials.get(
+  const plane = app.world.cache.get(
     `./assets/ressources/world/grass/grass.avif`,
     url => {
 

@@ -4,18 +4,21 @@ import conversation3 from './conversation3'
 
 const init = (app, discussions) => {
 
-  discussions.characters.add('lost-peasant', {
-    name  : 'Lost peasant',
+  discussions.characters.add('helpful-peasant', {
+    name  : 'Helpful peasant',
+    color : '#467964',
     image : './assets/ressources/characters/peasant/images/brown.png'
   })
 
   discussions.characters.add('chill-peasant', {
     name  : 'Chill peasant',
+    color : '#346786',
     image : './assets/ressources/characters/peasant/images/blue.png'
   })
 
   discussions.characters.add('peasant', {
     name  : 'Confused peasant',
+    color : '#719b8f',
     image : './assets/ressources/characters/peasant/images/green.png'
   })
 

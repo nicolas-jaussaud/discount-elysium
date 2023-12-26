@@ -13,7 +13,7 @@ const renderPath = ({
   config
 }) => {
 
-  const plane = app.world.materials.get(
+  const plane = app.world.cache.get(
     `./assets/ressources/world/path/path-${config.type ?? 'narow'}.jpg`,
     url => {
 

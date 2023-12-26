@@ -17,7 +17,7 @@ const renderWater = ({
   config = {}
 }) => {
   
-  const meshes = app.world.materials.get(
+  const meshes = app.world.cache.get(
     config.border ?? 'regular',
     type => {
 
@@ -26,14 +26,8 @@ const renderWater = ({
        * display a ShadowMaterial at the same position than the shaders to simulate i 
        */
       const shadow = new ShadowMaterial({
-        opacity: 0.25, 
-        color: 0x06436d
-      })
-
-      const floor = new MeshToonMaterial({
-        opacity: 0.8,
-        transparent    : true,
-        color: 0x000
+        opacity : 0.25, 
+        color   : 0x06436d
       })
 
       const uniforms = {
@@ -56,7 +50,6 @@ const renderWater = ({
       
       return {
         surface : new Mesh(geometry, material),
-        floor   : new Mesh(geometry, floor),
         shadow  : new Mesh(geometry, shadow),
       }
     }
@@ -64,20 +57,12 @@ const renderWater = ({
 
   const surface = meshes.surface.clone()
   const shadow  = meshes.shadow.clone()
-  const floor   = meshes.floor.clone()
 
   shadow.receiveShadow = true
   shadow.position.set(
     coordinates.x[1] - app.map.squareSize / 2, 
     coordinates.y[1] - app.map.squareSize / 2,
     -20
-  )
-
-  floor.receiveShadow = true
-  floor.position.set(
-    coordinates.x[1] - app.map.squareSize / 2, 
-    coordinates.y[1] - app.map.squareSize / 2,
-    - 150
   )
   
   if( config.rotation ) surface.rotation.z = config.rotation
@@ -98,13 +83,11 @@ const renderWater = ({
   scene.add(belowSurface)
   scene.add(surface)
   scene.add(shadow)
-  scene.add(floor)
   
   if( ! config.wall ) return; 
 
   config.wall.forEach(position => {
-    const wall = createWall(app, scene, coordinates, position)
-    wall.castS
+    const wall = createWall(app, scene, coordinates, position, 'cliff-underwater.png')
     wall.position.z = - ( app.map.squareSize / 2 ) - 1
   })
 }

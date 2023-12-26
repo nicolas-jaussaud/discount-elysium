@@ -1,4 +1,7 @@
-import { area } from './helpers'
+import { 
+  area, 
+  platform 
+} from './helpers'
 
 const map1 = {
 
@@ -10,23 +13,7 @@ const map1 = {
   ...area([-1, 1], [8, 8], { type: 'water', config: { border: 'one-side', rotation: Math.PI } }),
   '2|8': { type: 'water' },
 
-  '0|7': { type: 'path', config: { type: 'full' } },
-  '2|7': { type: 'water', config: { border: 'one-side', rotation: Math.PI / 2, wall: [ 'left' ] } },
-  '1|7': { type: 'path', config: { type: 'full' } },
-  '-1|7': { type: 'path', config: { type: 'full' } },
-  '-2|7': { type: 'water', config: { border: 'one-side', rotation: -Math.PI / 2 } },
-
-  '0|6': { type: 'tree', config: { type: 4 } },
-  '2|6': { type: 'water', config: { border: 'one-side', rotation: Math.PI / 2, wall: [ 'left' ] } },
-  '1|6': { type: 'path', config: { type: 'full' } },
-  '-1|6': { type: 'path', config: { type: 'full' } },
-  '-2|6': { type: 'water', config: { border: 'one-side', rotation: -Math.PI / 2 } },
-
-  '2|5': { type: 'water', config: { border: 'one-side', rotation: Math.PI / 2, wall: [ 'left' ] } },
-  '1|5': { type: 'path', config: { type: 'full' } },
-  '0|5': { type: 'path', config: { type: 'full' } },
-  '-1|5': { type: 'path', config: { type: 'full' } },
-  '-2|5': { type: 'water', config: { border: 'one-side', rotation: -Math.PI / 2 } },
+  ...platform(-2, 5),
   
   ...area([-8, -3], [4, 4], { type: 'water', config: { border: 'one-side', rotation: Math.PI } }),
   '-2|4': { type: 'water' },
@@ -43,9 +30,7 @@ const map1 = {
   '1|3': { type: 'water', config: { border: 'one-side', wall: [ 'left' ], rotation: Math.PI / 2 } },
   '2|3': { type: 'water' },
 
-  '-8|2': { type: 'grass' },
-  '-7|2': { type: 'grass' },
-  '-6|2': { type: 'grass' },
+  ...area([-6, -8], [2, 2], { type: 'grass' }),
   '-5|2': { type: 'cliff', config: [{ position: 'bottom', height: 1 }] },
   '-4|2': { type: 'cliff', config: [{ position: 'bottom', height: 2 }] },
   '-3|2': { type: 'cliff', config: [{ position: 'right', height: 2 }, { position: 'bottom', height: 2 }] },
@@ -250,47 +235,16 @@ const map1 = {
   '1|-9': { type: 'cliff' },
   '2|-9': { type: 'cliff' },
   '3|-9': { type: 'cliff', config: [{ position: 'right', height: 1 }] },
-  '4|-9': { type: 'grass' },
-  '5|-9': { type: 'grass'},
-  '6|-9': { type: 'grass'},
-  '7|-9': { type: 'grass'},
-  '8|-9': { type: 'grass'},
+  ...area([4, 8], [-9, -9], { type: 'grass' }),
 
-  '-8|-10': { type: 'cliff', config: { height: 2 } },
-  '-7|-10': { type: 'cliff', config: { height: 2 } },
-  '-6|-10': { type: 'cliff', config: { height: 2 } },
-  '-5|-10': { type: 'cliff', config: { height: 2 } },
-  '-4|-10': { type: 'cliff', config: { height: 2 } },
-  '-3|-10': { type: 'cliff', config: { height: 2 } },
-  '-2|-10': { type: 'cliff', config: [{ position: 'right', height: 2 }, { position: 'bottom', height: 2 }] },
-  '-1|-10': { type: 'cliff', config: [{ position: 'right', height: 1 }, { position: 'bottom', height: 1 }] },
+  ...area([-8, -3], [-10, -10], { type: 'cliff', config: { height: 2 } }),
+  ...area([-2, -1], [-10, -10], { type: 'cliff', config: [{ position: 'right', height: 2 }, { position: 'bottom', height: 2 }] }),
   '0|-10': { type: 'path' },
-  '1|-10': { type: 'cliff', config: [{ position: 'bottom', height: 1 }] },
-  '2|-10': { type: 'cliff', config: [{ position: 'bottom', height: 1 }] },
-  '3|-10': { type: 'cliff', config: [{ position: 'bottom', height: 1 }] },
-  '4|-10': { type: 'cliff', config: [{ position: 'bottom', height: 1 }] },
-  '5|-10': { type: 'cliff', config: [{ position: 'bottom', height: 1 }] },
-  '6|-10': { type: 'cliff', config: [{ position: 'bottom', height: 1 }] },
-  '7|-10': { type: 'cliff', config: [{ position: 'bottom', height: 1 }] },
-  '8|-10': { type: 'cliff', config: [{ position: 'bottom', height: 1 }] },
+  ...area([1, 10], [-10, -10], { type: 'cliff', config: [{ position: 'bottom', height: 1 }] }),
 
-  '-8|-11': { type: 'grass' },
-  '-7|-11': { type: 'grass' },
-  '-6|-11': { type: 'grass' },
-  '-5|-11': { type: 'grass' },
-  '-4|-11': { type: 'grass' },
-  '-3|-11': { type: 'grass' },
-  '-2|-11': { type: 'grass' },
-  '-1|-11': { type: 'grass' },
+  ...area([-8, -1], [-11, -11], { type: 'grass' }),
   '0|-11': { type: 'path' },
-  '1|-11': { type: 'grass' },
-  '2|-11': { type: 'grass' },
-  '3|-11': { type: 'grass' },
-  '4|-11': { type: 'grass' },
-  '5|-11': { type: 'grass' },
-  '6|-11': { type: 'grass' },
-  '7|-11': { type: 'grass' },
-  '8|-11': { type: 'grass' },
+  ...area([1, 8], [-11, -11], { type: 'grass' }),
 }
 
 export { map1 }

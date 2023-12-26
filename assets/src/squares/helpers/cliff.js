@@ -7,7 +7,7 @@ import {
 
 const createCliff = (app, scene, coordinates, config) => {
   
-  const cachedCliff = app.world.materials.get(
+  const cachedCliff = app.world.cache.get(
     `cliff-mesh`,
     () => {
 

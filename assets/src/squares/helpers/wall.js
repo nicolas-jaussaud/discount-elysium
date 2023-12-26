@@ -5,16 +5,30 @@ import {
   BoxGeometry
 } from 'three'
 
-const createWall = (app, scene, coordinates, position) => {
+const createWall = (app, scene, coordinates, position, type = false) => {
   
-  const wall = app.world.materials.get(
-    `./assets/ressources/world/cliff/cliff.jpg`,
+  const isUnderwater = type === 'cliff-underwater.png'
+  
+  const wall = app.world.cache.get(
+    `./assets/ressources/world/cliff/${type ? type : 'cliff.jpg'}`,
     url => {
 
-      const texture       = new TextureLoader().load(url)
-      const imageMaterial = new MeshToonMaterial({ map: texture })
-      const colorMaterial = new MeshToonMaterial({ color: 0x464237 })
-      const geometry      = new BoxGeometry(app.map.squareSize, 40, app.map.squareSize)  
+      const texture  = new TextureLoader().load(url)
+      const geometry = new BoxGeometry(
+        app.map.squareSize, 
+        isUnderwater ? 0 : 40, 
+        app.map.squareSize
+      )  
+
+      const imageMaterial = new MeshToonMaterial({ 
+        map         : texture, 
+        transparent : isUnderwater 
+      })
+
+      const colorMaterial = new MeshToonMaterial({ 
+        color       : 0x464237, 
+        transparent : isUnderwater
+      })
 
       return new Mesh(geometry, [ 
         colorMaterial, 
@@ -37,15 +51,15 @@ const createWall = (app, scene, coordinates, position) => {
 
   switch(position) {
     case 'top':
-      wall.position.y = (wall.position.y + app.map.squareSize / 2) + 20
+      wall.position.y = (wall.position.y + app.map.squareSize / 2) + (isUnderwater ? 0 : 20)
       break;
     case 'right':
       wall.rotation.z = Math.PI / 2
-      wall.position.x = (wall.position.x + app.map.squareSize / 2) + 20
+      wall.position.x = (wall.position.x + app.map.squareSize / 2) + (isUnderwater ? 0 : 20)
       break;
     case 'left':
       wall.rotation.z = Math.PI / 2
-      wall.position.x = (wall.position.x - app.map.squareSize / 2) - 20
+      wall.position.x = (wall.position.x - app.map.squareSize / 2) - (isUnderwater ? 0 : 20)
       break;
   }
 

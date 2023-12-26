@@ -1,5 +1,4 @@
 import { createCliff } from './helpers/cliff'
-import { renderGrass } from './grass'
 
 const renderCliff = ({
   scene,
@@ -9,8 +8,9 @@ const renderCliff = ({
 }) => {
 
   let maxHeight = config.height ?? 1
-  
-  Array.isArray(config) && config.forEach(cliff => {
+  if( ! Array.isArray(config) ) config = [{ height : maxHeight }]
+
+  config.forEach(cliff => {
     createCliff(app, scene, coordinates, cliff)
     maxHeight = maxHeight < cliff.height ? cliff.height : maxHeight
   })

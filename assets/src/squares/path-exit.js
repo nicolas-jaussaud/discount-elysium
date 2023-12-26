@@ -15,7 +15,7 @@ const renderExitPath = ({
   scene
 }) => {
 
-  const plane = app.world.materials.get(
+  const plane = app.world.cache.get(
     `./assets/ressources/world/path/path-narow.jpg`,
     url => {
 
@@ -30,7 +30,6 @@ const renderExitPath = ({
     }
   )
 
-
   plane.position.set(
     coordinates.x[1] - app.map.squareSize / 2, 
     coordinates.y[1] - app.map.squareSize / 2,
@@ -43,6 +42,8 @@ const renderExitPath = ({
   const maybeLoadMap = ({
     character
   }) => {
+
+    if( character.name !== 'main' ) return;
 
     const square = app.map.getSquareByCoordinates(character.object.position)
     
