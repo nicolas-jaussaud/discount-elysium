@@ -9,37 +9,39 @@ const createWall = (app, scene, coordinates, position, type = false) => {
   
   const isUnderwater = type === 'cliff-underwater.png'
   
-  const wall = app.world.cache.get(
-    `./assets/ressources/world/cliff/${type ? type : 'cliff.jpg'}`,
-    url => {
+  const wall = app.world.registerObject(
+    app.world.cache.get(
+      `./assets/ressources/world/cliff/${type ? type : 'cliff.jpg'}`,
+      url => {
 
-      const texture  = new TextureLoader().load(url)
-      const geometry = new BoxGeometry(
-        app.map.squareSize, 
-        isUnderwater ? 0 : 40, 
-        app.map.squareSize
-      )  
+        const texture  = new TextureLoader().load(url)
+        const geometry = new BoxGeometry(
+          app.map.squareSize, 
+          isUnderwater ? 0 : 40, 
+          app.map.squareSize
+        )  
 
-      const imageMaterial = new MeshToonMaterial({ 
-        map         : texture, 
-        transparent : isUnderwater 
-      })
+        const imageMaterial = new MeshToonMaterial({ 
+          map         : texture, 
+          transparent : isUnderwater 
+        })
 
-      const colorMaterial = new MeshToonMaterial({ 
-        color       : 0x464237, 
-        transparent : isUnderwater
-      })
+        const colorMaterial = new MeshToonMaterial({ 
+          color       : 0x464237, 
+          transparent : isUnderwater
+        })
 
-      return new Mesh(geometry, [ 
-        colorMaterial, 
-        colorMaterial,
-        colorMaterial,
-        imageMaterial,
-        colorMaterial,
-        colorMaterial,
-      ])
-    }
-  ).clone()
+        return new Mesh(geometry, [ 
+          colorMaterial, 
+          colorMaterial,
+          colorMaterial,
+          imageMaterial,
+          colorMaterial,
+          colorMaterial,
+        ])
+      }
+    ).clone()
+  )
 
   wall.receiveShadow = true
   wall.castShadow = true

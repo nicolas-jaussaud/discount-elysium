@@ -15,7 +15,7 @@ const map2 = {
 
   '1|3': { type: 'water', config: { border: 'corner', rotation: Math.PI, wall: [ 'left' ]} },
 
-  '-5|2': { type: 'water', config: { border: 'one-side', rotation: Math.PI / 2 } },
+  '-5|2': { type: 'water', config: { border: 'one-side', rotation: - Math.PI / 2 } },
   ...area([-4, -2], [2, 2], { type : 'grass' }),
   '-1|2': { type: 'water', config: { border: 'three-side', rotation: -Math.PI / 2, wall: [ 'left' ] } },
   '0|2': { type: 'path-exit', config: { map: 'map1', square: '0|-5', arrow: 'top' } },

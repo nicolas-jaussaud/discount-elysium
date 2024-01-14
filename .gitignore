@@ -1,5 +1,6 @@
 node_modules
 *.log
 *.local.js
+*.local.html
 package-lock.json
 yarn.lock
