@@ -14,7 +14,8 @@ const init = () => {
    * @see ./discore/src
    */
   const app = discore.init({
-    element: document.getElementById('app')
+    element     : document.getElementById('app'),
+    environment : window.environment ?? process.env.NODE_ENV
   })
 
   /**
@@ -69,6 +70,7 @@ const init = () => {
   app.hooks.addAction('mapLoaded', () => app.renderer.shadowMap.autoUpdate = true)
   app.hooks.addAction('loadComplete', () => app.renderer.shadowMap.autoUpdate = false)
 
+  window.addEventListener('resize', () => app.updateSize(window.innerWidth, window.innerHeight))
   window.app = app
 } 
 

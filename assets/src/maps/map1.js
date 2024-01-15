@@ -182,7 +182,7 @@ const map1 = {
   '2|-6': { type: 'cliff' },
   '3|-6': { type: 'cliff', config: [{ position: 'right', height: 1 }] },
   '4|-6': { type: 'grass'},
-  '5|-6': { type: 'water', config: { border: 'corner', rotation: Math.PI } },
+  '5|-6': { type: 'water', config: { border: 'corner', rotation: Math.PI, wall: [ 'left' ] } },
   '6|-6': { type: 'water', config: { border: 'one-side', rotation: Math.PI } },
   '7|-6': { type: 'water', config: { border: 'corner', rotation: - Math.PI / 2 } },
   '8|-6': { type: 'grass' },

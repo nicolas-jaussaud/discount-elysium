@@ -27,6 +27,7 @@ const init = app => {
 
       // Loop on defined actions
       const doAction = index => {
+        if( app.map.current.name !== 'map1' ) return;
         stories[0][ index ](character).then(() => doAction(
           stories[0].length - 1 !== index ? index + 1 : 0 
         ))
@@ -49,6 +50,7 @@ const init = app => {
 
       // Loop on defined actions
       const doAction = index => {
+        if( app.map.current.name !== 'map2' ) return;
         stories[1][ index ](character).then(() => doAction(
           stories[1].length - 1 !== index ? index + 1 : 0 
         ))
