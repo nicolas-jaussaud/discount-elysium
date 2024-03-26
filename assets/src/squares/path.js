@@ -2,8 +2,7 @@ import { createWall } from './helpers/wall'
 import { 
   PlaneGeometry, 
   TextureLoader,
-  MeshToonMaterial,
-  Mesh 
+  MeshToonMaterial
 } from 'three'
 
 const renderPath = ({
@@ -13,34 +12,38 @@ const renderPath = ({
   config
 }) => {
 
-  const plane = app.world.cache.get(
-    `./assets/ressources/world/path/path-${config.type ?? 'narow'}.jpg`,
+  const key = `path-${config.type ?? 'narow'}`
+  const cache = app.world.cache.get(
+    `./assets/ressources/world/path/${key}.jpg`,
     url => {
 
       const texture  = new TextureLoader().load(url)
       const material = new MeshToonMaterial({ map: texture })
       const geometry = new PlaneGeometry(app.map.squareSize, app.map.squareSize)
-      const plane    = new Mesh(geometry, material)
       
-      plane.receiveShadow = true
-      
-      return plane
+      return { geometry, material }
     }
-  ).clone()
-
-  plane.position.set(
-    coordinates.x[1] - app.map.squareSize / 2, 
-    coordinates.y[1] - app.map.squareSize / 2,
-    0
   )
-    
-  scene.add(plane)
+
+  app.world.instance.add(key, cache.geometry, cache.material, { 
+    before: mesh => mesh.receiveShadow = true,
+    position: { 
+      x: coordinates.x[1] - app.map.squareSize / 2,
+      y: coordinates.y[1] - app.map.squareSize / 2,
+      z: 0 
+    }
+  })
 
   if( ! config.wall ) return; 
 
   config.wall.forEach(position => {
-    const wall = createWall(app, scene, coordinates, position)
-    wall.position.z = - ( app.map.squareSize / 2 ) + 50
+    createWall(
+      app, 
+      scene, 
+      coordinates, 
+      position, 
+      -( app.map.squareSize / 2 ) + 50
+    )
   })
 }
 

@@ -1,8 +1,7 @@
 import { 
   PlaneGeometry, 
   MeshToonMaterial,
-  TextureLoader,
-  Mesh
+  TextureLoader
 } from 'three'
 
 const renderGrass = ({
@@ -11,29 +10,26 @@ const renderGrass = ({
   app
 }) => {
 
-  const plane = app.world.cache.get(
+  const cache = app.world.cache.get(
     `./assets/ressources/world/grass/grass.avif`,
     url => {
 
       const texture  = new TextureLoader().load(url)
       const material = new MeshToonMaterial({ map: texture })
       const geometry = new PlaneGeometry(app.map.squareSize, app.map.squareSize)
-      const plane    = new Mesh(geometry, material)
-
-      plane.receiveShadow = true
-
-      return plane
+     
+      return { material, geometry }
     }
-  ).clone()
-
-  plane.position.set(
-    coordinates.x[1] - app.map.squareSize / 2, 
-    coordinates.y[1] - app.map.squareSize / 2,
-    0
   )
 
-  scene.add(plane)
-  return plane
+  app.world.instance.add('grass', cache.geometry, cache.material, { 
+    before: mesh => mesh.receiveShadow = true,
+    position: { 
+      x: coordinates.x[1] - app.map.squareSize / 2,
+      y: coordinates.y[1] - app.map.squareSize / 2,
+      z: 0 
+    }
+  })
 }
 
 export { renderGrass }

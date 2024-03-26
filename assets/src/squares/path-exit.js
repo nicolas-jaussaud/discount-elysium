@@ -1,11 +1,5 @@
-import { 
-  PlaneGeometry, 
-  TextureLoader,
-  MeshToonMaterial,
-  Mesh 
-} from 'three'
-
 import maps from '../maps/'
+import { renderPath } from './path'
 
 const renderExitPath = ({
   coordinates,
@@ -15,29 +9,15 @@ const renderExitPath = ({
   scene
 }) => {
 
-  const plane = app.world.cache.get(
-    `./assets/ressources/world/path/path-narow.jpg`,
-    url => {
-
-      const texture  = new TextureLoader().load(url)
-      const material = new MeshToonMaterial({ map: texture })
-      const geometry = new PlaneGeometry(app.map.squareSize, app.map.squareSize)
-      const plane    = new Mesh(geometry, material)
-      
-      plane.receiveShadow = true
-      
-      return plane
-    }
-  )
-
-  plane.position.set(
-    coordinates.x[1] - app.map.squareSize / 2, 
-    coordinates.y[1] - app.map.squareSize / 2,
-    0
-  )
-
-  const arrow = config.arrow ?? 'bottom'
-  // if( arrow === 'top' ) plane.rotation.z = Math.PI
+  renderPath({ 
+    app, 
+    coordinates, 
+    scene, 
+    config: { 
+      ...config,
+      type: 'narow'
+    } 
+  })
 
   const maybeLoadMap = ({
     character
@@ -65,8 +45,6 @@ const renderExitPath = ({
    * Leave the map when character arrive on the square
    */
   app.hooks.addAction('characterMoved', maybeLoadMap)
-
-  scene.add(plane)
 }
 
 export { renderExitPath }

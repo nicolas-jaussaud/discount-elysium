@@ -1,16 +1,14 @@
 import { 
   MeshToonMaterial,
   TextureLoader,
-  Mesh,
   BoxGeometry
 } from 'three'
 
-const createWall = (app, scene, coordinates, position, type = false) => {
+const createWall = (app, scene, coordinates, direction, height, type = false) => {
   
   const isUnderwater = type === 'cliff-underwater.png'
   
-  const wall = app.world.registerObject(
-    app.world.cache.get(
+  const cache = app.world.cache.get(
       `./assets/ressources/world/cliff/${type ? type : 'cliff.jpg'}`,
       url => {
 
@@ -31,42 +29,49 @@ const createWall = (app, scene, coordinates, position, type = false) => {
           transparent : isUnderwater
         })
 
-        return new Mesh(geometry, [ 
-          colorMaterial, 
-          colorMaterial,
-          colorMaterial,
-          imageMaterial,
-          colorMaterial,
-          colorMaterial,
-        ])
+        return {
+          geometry, 
+          material: [
+            colorMaterial, 
+            colorMaterial,
+            colorMaterial,
+            imageMaterial,
+            colorMaterial,
+            colorMaterial,
+          ]
+        }
       }
-    ).clone()
-  )
+    )
+  
+  const rotation = { x: 0, y:0, z: 0 }
+  const position = {
+    x: coordinates.x[1] - app.map.squareSize / 2,
+    y: coordinates.y[1] - app.map.squareSize / 2, 
+    z: height ?? 0
+  }
 
-  wall.receiveShadow = true
-  wall.castShadow = true
-  wall.position.set(
-    coordinates.x[1] - app.map.squareSize / 2, 
-    coordinates.y[1] - app.map.squareSize / 2,
-    0
-  )
-
-  switch(position) {
+  switch(direction) {
     case 'top':
-      wall.position.y = (wall.position.y + app.map.squareSize / 2) + (isUnderwater ? 0 : 20)
+      position.y = (position.y + app.map.squareSize / 2) + (isUnderwater ? 0 : 20)
       break;
     case 'right':
-      wall.rotation.z = Math.PI / 2
-      wall.position.x = (wall.position.x + app.map.squareSize / 2) + (isUnderwater ? 0 : 20)
+      rotation.z = Math.PI / 2
+      position.x = (position.x + app.map.squareSize / 2) + (isUnderwater ? 0 : 20)
       break;
     case 'left':
-      wall.rotation.z = Math.PI / 2
-      wall.position.x = (wall.position.x - app.map.squareSize / 2) - (isUnderwater ? 0 : 20)
+      rotation.z = Math.PI / 2
+      position.x = (position.x - app.map.squareSize / 2) - (isUnderwater ? 0 : 20)
       break;
   }
 
-  scene.add(wall)
-  return wall 
+  app.world.instance.add(`cliff-mesh-${type}`, cache.geometry, cache.material, { 
+    position,
+    rotation,
+    before: mesh => {
+      mesh.receiveShadow = true
+      mesh.castShadow = true
+    }
+  })
 }
 
 export { createWall }
