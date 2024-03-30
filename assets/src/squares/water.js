@@ -1,13 +1,13 @@
-import WaterFragment from './shaders/water.fragment.glsl'
-import WaterVertex from './shaders/water.vertex.glsl'
-import { createWall } from './helpers/wall'
-
 import { 
   PlaneGeometry, 
   Mesh,
   ShaderMaterial,
   ShadowMaterial
 } from 'three'
+
+import WaterFragment from '../shaders/water.fragment.glsl'
+import WaterVertex from '../shaders/water.vertex.glsl'
+import { createWall } from './helpers/wall'
 
 const renderWater = ({
   coordinates,
@@ -57,7 +57,6 @@ const renderWater = ({
     () => {
 
       const geometry = new PlaneGeometry(app.map.squareSize, app.map.squareSize)
-      geometry.computeVertexNormals()
       const material = new ShadowMaterial({
         opacity : 0.25, 
         color   : 0x06436d
@@ -90,7 +89,11 @@ const renderWater = ({
       mesh.renderOrder = 2
       shadow.renderOrder = 3
       shadow.receiveShadow = true
-      shadow.position.set(position.x, position.y, position.z + 0.001)
+      shadow.position.set(
+        position.x, 
+        position.y, 
+        position.z + 0.001
+      )
       scene.add(shadow)
     }
   })

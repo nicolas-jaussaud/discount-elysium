@@ -1,3 +1,16 @@
+import {
+  ShaderMaterial,
+  Color,
+  FrontSide,
+  AdditiveBlending,
+  Mesh,
+  MeshBasicMaterial,
+  BoxGeometry,
+	SphereGeometry
+} from 'three'
+
+import GlowFragment from '../shaders/glow.fragment.glsl'
+import GlowVertex from '../shaders/glow.vertex.glsl'
 
 import maps from '../maps/'
 import stories from './stories/'
@@ -71,8 +84,56 @@ const init = app => {
       )
     })
   })
+
+  /**
+   * Highlight character on mouseover
+   */
+  app.hooks.addAction('mapLoaded', args => {
+
+    /**
+     * @see https://github.com/stemkoski/stemkoski.github.com/blob/master/Three.js/Shader-Glow.html
+     */
+    const mesh = app.world.cache.get('glow-material', () => {
+
+      const sphere = new SphereGeometry(app.map.squareSize / 4, 15, 15)
+      const material = new ShaderMaterial({
+        vertexShader   : GlowVertex,
+        fragmentShader : GlowFragment,
+        side           : FrontSide,
+        blending       : AdditiveBlending,
+        transparent    : true,
+        uniforms       : { 
+          c          : { type: 'f',  value: 1.0 },
+          p          : { type: 'f',  value: 4.2 },
+          glowColor  : { type: 'c',  value: new Color(0xFFFF00) },
+          viewVector : { type: 'v3', value: app.camera.position }
+        }
+      })
+      
+      const mesh = new Mesh(sphere, material) 
+      mesh.renderOrder = 2 
+      
+      return mesh
+    })
+
+    app.hooks.addAction('mouseEnterCharacter', ({ character }) => {
+      if( character.name === 'main' ) app.map.current.scene.remove(mesh)
+    })
+
+    app.hooks.addAction('mouseOnCharacter', ({ character }) => {
+      if( character.name === 'main' ) return app.map.current.scene.remove(mesh)
+      mesh.position.set(
+        character.object.position.x,
+        character.object.position.y,
+        character.object.position.z + app.map.squareSize / 4
+      )
+      app.map.current.scene.add(mesh)
+    })
+
+    app.hooks.addAction('mouseLeaveCharacter', () => {
+      app.map.current.scene.remove(mesh)
+    })
+  })
 }
-
-
 
 export { init }

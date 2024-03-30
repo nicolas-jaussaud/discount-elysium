@@ -22,7 +22,7 @@ const createCliff = (app, scene, coordinates, config) => {
         app.map.squareSize,
         app.map.squareSize,
         app.map.squareSize
-      )  
+      )
       
       return {
         geometry,
@@ -48,6 +48,7 @@ const createCliff = (app, scene, coordinates, config) => {
       before: mesh => {
         mesh.receiveShadow = true
         mesh.castShadow = true
+        mesh.walkable = false
       }
     })
   }
