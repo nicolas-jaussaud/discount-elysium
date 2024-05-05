@@ -38,9 +38,11 @@ const renderWater = ({
         uniforms       : uniforms
       })
       
-      setInterval(() => {
-        if( material.uniforms ) material.uniforms.uTime.value += 0.1
-      }, 25)
+      const animate = () => {
+        material.uniforms.uTime.value += 0.05
+        requestAnimationFrame(animate)
+      }
+      requestAnimationFrame(animate)
 
       const geometry = new PlaneGeometry(app.map.squareSize, app.map.squareSize)
       
@@ -125,7 +127,7 @@ const renderWater = ({
 }
 
 /**
- * There are not string type in glsl
+ * There is no string type in glsl
  */
 const getBorderType = name => ({
   'water-regular'    : 0,
