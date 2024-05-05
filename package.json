@@ -1,12 +1,10 @@
 {
   "name": "discount-elysium",
   "version": "1.0.0",
+  "type": "module",
   "scripts": {
     "dev": "roll dev",
     "build": "roll build"
-  },
-  "dependencies": {
-    "three": "^0.146.0"
   },
   "devDependencies": {
     "@tangible/roller": "^1.2.1"
